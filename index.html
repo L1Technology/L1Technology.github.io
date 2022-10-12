@@ -58,6 +58,16 @@
   <script>
     var clipic = new Clipic()
 	
+	function GetQueryValue(queryName) {
+		var reg = new RegExp("(^|&)" + queryName + "=([^&]*)(&|$)", "i");
+		var r = window.location.search.substr(1).match(reg);
+		if ( r != null ){
+		   return decodeURI(r[2]);
+		}else{
+		   return null;
+		}
+	 }
+	
 	function convertToBlob(base64Str, fileType) {
             var base64 = window.atob(base64Str);
             var len = base64.length;
@@ -91,12 +101,17 @@
         }
 	
 	function upload(base64img,fileType){
+		var key = GetQueryValue('k');
+		alert(key);
+		if(key == null)
+			return;
+			
 		var base64Str = base64img.substring(base64img.indexOf(',') + 1);
 		var blob = convertToBlob(base64Str,fileType);
 		var formData = new FormData();
         formData.append("file", blob, 'img.png'); 
         $.ajax({
-                url: 'http://120.46.206.116:8021/icon?k=234',
+                url: 'http://120.46.206.116:8021/icon?k='+k,
                 method: "POST",
                 data: formData,
                 cache: false,
