@@ -102,7 +102,6 @@
 	
 	function upload(base64img,fileType){
 		var key = GetQueryValue('k');
-		alert(key);
 		if(key == null)
 			return;
 			
@@ -116,7 +115,10 @@
                 data: formData,
                 cache: false,
                 processData: false,
-                contentType: false
+                contentType: false,
+				success: res => {
+					alert('上传成功，车机即将更新头像')
+					}
                 });
 	}
 	
